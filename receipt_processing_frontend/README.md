@@ -1,82 +1,57 @@
-# Lightweight React Template for KAVIA
+# Receipt Processing Frontend (React)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A responsive React web app for uploading, processing, searching, and managing expense documents (receipts, invoices, PDFs, and images). Integrates with the Flask backend REST API.
 
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- Upload receipts/invoices with metadata (vendor, date, amount)
+- Document list with pagination
+- Document detail view with file preview and extracted fields
+- Search by vendor, amount, date
+- Version history per document
+- Admin dashboard for system statistics and job monitoring
+- Responsive design and dark/light theme toggle
+- Clear error handling for API/network failures
 
 ## Getting Started
 
-In the project directory, you can run:
+1. Install dependencies:
+   - npm install
 
-### `npm start`
+2. Set environment variables:
+   - Copy .env.example to .env and set REACT_APP_API_BASE_URL
+   - Example:
+     REACT_APP_API_BASE_URL=http://localhost:5000
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. Start development server:
+   - npm start
+   - Open http://localhost:3000
 
-### `npm test`
+If you encounter build errors about missing modules (e.g., react-router-dom), run:
+- npm ci
+- or npm install
 
-Launches the test runner in interactive watch mode.
+## Environment Variables
 
-### `npm run build`
+- REACT_APP_API_BASE_URL: Base URL of the Flask backend (e.g., http://localhost:5000)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure
 
-## Customization
+- src/services/api.js: API client for backend integration
+- src/components: Reusable UI components
+- src/pages: Application pages and flows
+- src/App.js: App shell with routes and navigation
 
-### Colors
+## Notes
 
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
-
-### Components
-
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Ensure CORS is enabled on the backend for your frontend origin.
+- This app assumes the backend provides endpoints:
+  - POST /documents/upload
+  - GET /documents (pagination)
+  - GET /documents/:id
+  - GET /documents/:id/file
+  - GET /documents/:id/versions
+  - GET /search
+  - GET /admin/overview
+  - GET /admin/jobs
+If your backend uses different paths, update src/services/api.js accordingly.
